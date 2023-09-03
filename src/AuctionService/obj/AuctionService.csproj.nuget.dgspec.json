@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Programmering\\repos\\BidWheels\\src\\AuctionService\\AuctionService.csproj": {}
+    "e:\\Programmering\\repos\\BidWheels\\src\\AuctionService\\AuctionService.csproj": {}
   },
   "projects": {
-    "E:\\Programmering\\repos\\BidWheels\\src\\AuctionService\\AuctionService.csproj": {
+    "e:\\Programmering\\repos\\BidWheels\\src\\AuctionService\\AuctionService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Programmering\\repos\\BidWheels\\src\\AuctionService\\AuctionService.csproj",
+        "projectUniqueName": "e:\\Programmering\\repos\\BidWheels\\src\\AuctionService\\AuctionService.csproj",
         "projectName": "AuctionService",
-        "projectPath": "E:\\Programmering\\repos\\BidWheels\\src\\AuctionService\\AuctionService.csproj",
+        "projectPath": "e:\\Programmering\\repos\\BidWheels\\src\\AuctionService\\AuctionService.csproj",
         "packagesPath": "C:\\Users\\phili\\.nuget\\packages\\",
-        "outputPath": "E:\\Programmering\\repos\\BidWheels\\src\\AuctionService\\obj\\",
+        "outputPath": "e:\\Programmering\\repos\\BidWheels\\src\\AuctionService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -44,16 +44,6 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "dependencies": {
-            "Microsoft.AspNetCore.OpenApi": {
-              "target": "Package",
-              "version": "[7.0.10, )"
-            },
-            "Swashbuckle.AspNetCore": {
-              "target": "Package",
-              "version": "[6.5.0, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
