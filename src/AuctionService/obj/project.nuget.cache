@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "aFbouvKGO40QKvHlJovVr5HTMwHgP7fFvqBO13JE3CfVCXwQa/AX8ibObxN6fELJMlHFYwOpMnoJkrSP4t4elg==",
+  "dgSpecHash": "hJoRAZQaiz/F7U1D2kUtL7rHOJv+sAbQYJSaW14xbTtiCnp//qp2jPgcRagVuhgYtyvPjfIIh740Neti6R+NOw==",
   "success": true,
-  "projectFilePath": "e:\\Programmering\\repos\\BidWheels\\src\\AuctionService\\AuctionService.csproj",
+  "projectFilePath": "E:\\Programmering\\repos\\BidWheels\\src\\AuctionService\\AuctionService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\phili\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\phili\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

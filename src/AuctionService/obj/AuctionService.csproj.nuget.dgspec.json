@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "e:\\Programmering\\repos\\BidWheels\\src\\AuctionService\\AuctionService.csproj": {}
+    "E:\\Programmering\\repos\\BidWheels\\src\\AuctionService\\AuctionService.csproj": {}
   },
   "projects": {
-    "e:\\Programmering\\repos\\BidWheels\\src\\AuctionService\\AuctionService.csproj": {
+    "E:\\Programmering\\repos\\BidWheels\\src\\AuctionService\\AuctionService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "e:\\Programmering\\repos\\BidWheels\\src\\AuctionService\\AuctionService.csproj",
+        "projectUniqueName": "E:\\Programmering\\repos\\BidWheels\\src\\AuctionService\\AuctionService.csproj",
         "projectName": "AuctionService",
-        "projectPath": "e:\\Programmering\\repos\\BidWheels\\src\\AuctionService\\AuctionService.csproj",
+        "projectPath": "E:\\Programmering\\repos\\BidWheels\\src\\AuctionService\\AuctionService.csproj",
         "packagesPath": "C:\\Users\\phili\\.nuget\\packages\\",
-        "outputPath": "e:\\Programmering\\repos\\BidWheels\\src\\AuctionService\\obj\\",
+        "outputPath": "E:\\Programmering\\repos\\BidWheels\\src\\AuctionService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
