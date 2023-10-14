@@ -9,6 +9,9 @@ builder.Services.AddDbContext<AuctionContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default"));
 });
+// AppDomain provides the assemblies where the application is running in, from there AutoMapper
+// detects that the MappingProfiles class inherits from the Profile class and therefore uses it.
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
