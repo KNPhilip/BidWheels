@@ -82,5 +82,22 @@ namespace AuctionService.Controllers
 
             return success ? Ok() : BadRequest("Problem saving changes..");
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteAuction(Guid id)
+        {
+            Auction? auction = await _context.Auctions
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (auction is null)
+                return NotFound();
+
+            // TODO: check seller == username
+
+            _context.Auctions.Remove(auction);
+            bool success = await _context.SaveChangesAsync() > 0;
+
+            return success ? Ok() : BadRequest("Could not update the database.");
+        }
     }
 }
