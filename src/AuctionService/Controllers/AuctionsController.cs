@@ -59,5 +59,28 @@ namespace AuctionService.Controllers
                     new {auction.Id}, _mapper.Map<AuctionDto>(auction))
                 : BadRequest("Could not save changes to the database.");
         }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateAuction(Guid id, UpdateAuctionDto request)
+        {
+            Auction? auction = await _context.Auctions
+                .Include(x => x.Item)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (auction is null)
+                return NotFound();
+
+            // TODO: check seller == username
+
+            auction.Item!.Make = request.Make ?? auction.Item.Make;
+            auction.Item!.Model = request.Model ?? auction.Item.Model;
+            auction.Item!.Color = request.Color ?? auction.Item.Color;
+            auction.Item!.Mileage = request.Mileage ?? auction.Item.Mileage;
+            auction.Item!.Year = request.Year ?? auction.Item.Year;
+
+            bool success = await _context.SaveChangesAsync() > 0;
+
+            return success ? Ok() : BadRequest("Problem saving changes..");
+        }
     }
 }
