@@ -57,11 +57,12 @@ namespace AuctionService.Controllers
             auction.Seller = "Bob";
 
             _context.Auctions.Add(auction);
-            bool success = await _context.SaveChangesAsync() > 0;
 
             AuctionDto newAuction = _mapper.Map<AuctionDto>(auction);
 
             await _publishEndpoint.Publish(_mapper.Map<AuctionCreated>(newAuction));
+            
+            bool success = await _context.SaveChangesAsync() > 0;
 
             return success 
                 ? CreatedAtAction(nameof(GetAuction),
