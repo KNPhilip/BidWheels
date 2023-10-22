@@ -10,7 +10,7 @@ namespace SearchService.Data
         public static async Task InitDb(WebApplication app)
         {
             await DB.InitAsync("SearchDb", MongoClientSettings
-            .FromConnectionString(app.Configuration.GetConnectionString("MongoDb")));
+                .FromConnectionString(app.Configuration.GetConnectionString("MongoDb")));
 
             await DB.Index<Item>()
                 .Key(x => x.Make, KeyType.Text)
