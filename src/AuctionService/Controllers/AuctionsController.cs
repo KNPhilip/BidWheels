@@ -88,6 +88,8 @@ namespace AuctionService.Controllers
             auction.Item!.Mileage = request.Mileage ?? auction.Item.Mileage;
             auction.Item!.Year = request.Year ?? auction.Item.Year;
 
+            await _publishEndpoint.Publish(_mapper.Map<AuctionUpdated>(auction));
+
             bool success = await _context.SaveChangesAsync() > 0;
 
             return success ? Ok() : BadRequest("Problem saving changes..");
