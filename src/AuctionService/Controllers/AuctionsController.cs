@@ -88,6 +88,8 @@ namespace AuctionService.Controllers
             auction.Item!.Mileage = request.Mileage ?? auction.Item.Mileage;
             auction.Item!.Year = request.Year ?? auction.Item.Year;
 
+            await _publishEndpoint.Publish(_mapper.Map<AuctionUpdated>(auction));
+
             bool success = await _context.SaveChangesAsync() > 0;
 
             return success ? Ok() : BadRequest("Problem saving changes..");
@@ -96,8 +98,7 @@ namespace AuctionService.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteAuction(Guid id)
         {
-            Auction? auction = await _context.Auctions
-                .FirstOrDefaultAsync(x => x.Id == id);
+            Auction? auction = await _context.Auctions.FindAsync(id);
 
             if (auction is null)
                 return NotFound();
@@ -105,6 +106,9 @@ namespace AuctionService.Controllers
             // TODO: check seller == username
 
             _context.Auctions.Remove(auction);
+
+            await _publishEndpoint.Publish<AuctionDeleted>(new { Id = auction.Id.ToString() });
+
             bool success = await _context.SaveChangesAsync() > 0;
 
             return success ? Ok() : BadRequest("Could not update the database.");
