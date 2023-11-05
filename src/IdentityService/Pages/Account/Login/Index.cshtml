@@ -2,21 +2,16 @@
 @model IdentityService.Pages.Login.Index
 
 <div class="login-page">
-    <div class="lead">
-        <h1>Login</h1>
-        <p>Choose how to login</p>
-    </div>
-
     <partial name="_ValidationSummary" />
 
     <div class="row">
 
         @if (Model.View.EnableLocalLogin)
         {
-            <div class="col-sm-6">
+            <div class="col offset-3">
                 <div class="card">
                     <div class="card-header">
-                        <h2>Local Account</h2>
+                        <h2>Login</h2>
                     </div>
 
                     <div class="card-body">
