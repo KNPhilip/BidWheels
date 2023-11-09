@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using AuctionService.Data;
 using AuctionService.Dtos;
 using AuctionService.Entities;
@@ -5,6 +6,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Contracts;
 using MassTransit;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -49,12 +51,11 @@ namespace AuctionService.Controllers
             return _mapper.Map<AuctionDto>(auction);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize]
         public async Task<ActionResult<AuctionDto>> CreateAuction(CreateAuctionDto request)
         {
             Auction? auction = _mapper.Map<Auction>(request);
-            // TODO: add current user as seller
-            auction.Seller = "Bob";
+            auction.Seller = User.Identity!.Name!;
 
             _context.Auctions.Add(auction);
 
@@ -70,7 +71,7 @@ namespace AuctionService.Controllers
                 : BadRequest("Could not save changes to the database.");
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id}"), Authorize]
         public async Task<ActionResult> UpdateAuction(Guid id, UpdateAuctionDto request)
         {
             Auction? auction = await _context.Auctions
@@ -80,7 +81,8 @@ namespace AuctionService.Controllers
             if (auction is null)
                 return NotFound();
 
-            // TODO: check seller == username
+            if (auction.Seller != User.Identity!.Name)
+                return Forbid();
 
             auction.Item!.Make = request.Make ?? auction.Item.Make;
             auction.Item!.Model = request.Model ?? auction.Item.Model;
@@ -95,7 +97,7 @@ namespace AuctionService.Controllers
             return success ? Ok() : BadRequest("Problem saving changes..");
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize]
         public async Task<ActionResult> DeleteAuction(Guid id)
         {
             Auction? auction = await _context.Auctions.FindAsync(id);
@@ -103,7 +105,8 @@ namespace AuctionService.Controllers
             if (auction is null)
                 return NotFound();
 
-            // TODO: check seller == username
+            if (auction.Seller != User.Identity!.Name)
+                return Forbid();
 
             _context.Auctions.Remove(auction);
 
