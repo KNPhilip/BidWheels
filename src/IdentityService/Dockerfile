@@ -15,7 +15,7 @@ RUN dotnet restore BidWheels.sln
 
 COPY src/IdentityService src/IdentityService
 WORKDIR /src/IdentityService
-RUN dotnet publish -c Release -o /apps/src/out
+RUN dotnet publish -c Release -o /app/src/out
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
