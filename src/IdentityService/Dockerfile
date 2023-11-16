@@ -14,7 +14,7 @@ COPY src/GatewayService/GatewayService.csproj src/GatewayService/GatewayService.
 RUN dotnet restore BidWheels.sln
 
 COPY src/IdentityService src/IdentityService
-WORKDIR /src/IdentityService
+WORKDIR /app/src/IdentityService
 RUN dotnet publish -c Release -o /app/src/out
 
 # Build runtime image
