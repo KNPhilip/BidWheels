@@ -15,7 +15,7 @@ internal static class HostingExtensions
         builder.Services.AddRazorPages();
 
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+            options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
 
         builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -28,6 +28,10 @@ internal static class HostingExtensions
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseFailureEvents = true;
                 options.Events.RaiseSuccessEvents = true;
+                
+                // Sets the issuer URI to identity-svc when running in Docker.
+                if (builder.Environment.IsEnvironment("Docker"))
+                    options.IssuerUri = "identity-svc";
 
                 // see https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/
                 // options.EmitStaticAudienceClaim = true;
