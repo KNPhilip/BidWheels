@@ -1,5 +1,6 @@
 using AuctionService.Consumers;
 using AuctionService.Data;
+using AuctionService.Repositories;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+
+builder.Services.AddScoped<IAuctionRepository, AuctionRepository>();
+
 builder.Services.AddDbContext<AuctionContext>(options => 
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default"));
