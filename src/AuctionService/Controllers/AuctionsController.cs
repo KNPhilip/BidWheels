@@ -32,7 +32,7 @@ namespace AuctionService.Controllers
         public async Task<ActionResult<AuctionDto>> GetAuction(Guid id)
         {
             AuctionDto? auction = await _auctionRepository.GetAuctionAsync(id);
-            return auction is null ? NotFound() : auction;
+            return auction is null ? NotFound() : Ok(auction);
         }
 
         [HttpPost, Authorize]

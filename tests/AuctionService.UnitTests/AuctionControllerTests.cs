@@ -1,9 +1,11 @@
 using AuctionService.Controllers;
+using AuctionService.Dtos;
 using AuctionService.Repositories;
 using AuctionService.RequestHelpers;
 using AutoFixture;
 using AutoMapper;
 using MassTransit;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 
 namespace AuctionService.UnitTests
@@ -32,13 +34,18 @@ namespace AuctionService.UnitTests
         }
 
         [Fact]
-        public void TestName()
+        public async Task GetAuctions_WithNoParams_Returns10Auctions()
         {
             // Arrange
-        
+            List<AuctionDto> auctions = _fixture.CreateMany<AuctionDto>(10).ToList();
+            _auctionRepository.Setup(repo => repo.GetAuctionsAsync(null!)).ReturnsAsync(auctions);
+
             // Act
+            var result = await _auctionController.GetAllAuctions(null!);
         
             // Assert
+            Assert.Equal(10, result.Value!.Count);
+            Assert.IsType<ActionResult<List<AuctionDto>>>(result);
         }
     }
 }
