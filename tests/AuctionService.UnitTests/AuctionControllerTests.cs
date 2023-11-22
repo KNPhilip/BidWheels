@@ -41,11 +41,41 @@ namespace AuctionService.UnitTests
             _auctionRepository.Setup(repo => repo.GetAuctionsAsync(null!)).ReturnsAsync(auctions);
 
             // Act
-            var result = await _auctionController.GetAllAuctions(null!);
+            dynamic result = await _auctionController.GetAllAuctions(null!);
         
             // Assert
-            Assert.Equal(10, result.Value!.Count);
+            Assert.Equal(10, result.Result.Value!.Count);
             Assert.IsType<ActionResult<List<AuctionDto>>>(result);
+        }
+
+        [Fact]
+        public async Task GetAuction_WithValidGuid_ReturnsAuction()
+        {
+            // Arrange
+            AuctionDto auction = _fixture.Create<AuctionDto>();
+            _auctionRepository.Setup(repo => repo.GetAuctionAsync(It.IsAny<Guid>())).ReturnsAsync(auction);
+
+            // Act
+            dynamic result = await _auctionController.GetAuction(auction.Id);
+
+            // Assert
+            Assert.Equal(auction.Make, result.Result.Value.Make);
+            Assert.IsType<ActionResult<AuctionDto>>(result);
+            Assert.IsType<OkObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public async Task GetAuction_WithInvalidGuid_Returns404()
+        {
+            // Arrange
+            _auctionRepository.Setup(repo => repo.GetAuctionAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(value: null);
+
+            // Act
+            var result = await _auctionController.GetAuction(Guid.NewGuid());
+        
+            // Assert
+            Assert.IsType<NotFoundResult>(result.Result);
         }
     }
 }
