@@ -1,10 +1,13 @@
 using AuctionService.Controllers;
 using AuctionService.Dtos;
+using AuctionService.Entities;
 using AuctionService.Repositories;
 using AuctionService.RequestHelpers;
+using AuctionService.UnitTests.Utils;
 using AutoFixture;
 using AutoMapper;
 using MassTransit;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
@@ -30,7 +33,16 @@ namespace AuctionService.UnitTests
             });
 
             _mapper = new Mapper(mockMapper);
-            _auctionController = new AuctionsController(_mapper, _publishEndpoint.Object, _auctionRepository.Object);
+            _auctionController = new AuctionsController(_mapper, _publishEndpoint.Object, _auctionRepository.Object)
+            {
+                ControllerContext = new ControllerContext
+                {
+                    HttpContext = new DefaultHttpContext
+                    {
+                        User = AuthHelper.GetClaimsPrincipal()
+                    }
+                }
+            };
         }
 
         [Fact]
@@ -72,10 +84,27 @@ namespace AuctionService.UnitTests
                 .ReturnsAsync(value: null);
 
             // Act
-            var result = await _auctionController.GetAuction(Guid.NewGuid());
+            dynamic result = await _auctionController.GetAuction(Guid.NewGuid());
         
             // Assert
             Assert.IsType<NotFoundResult>(result.Result);
+        }
+
+        [Fact]
+        public async Task CreateAuction_WithValidCreateAuctionDto_ReturnsCreatedAtAction()
+        {
+            // Arrange
+            CreateAuctionDto auction = _fixture.Create<CreateAuctionDto>(); 
+            _auctionRepository.Setup(repo => repo.AddAuction(It.IsAny<Auction>()));
+            _auctionRepository.Setup(repo => repo.SaveChangesAsync()).ReturnsAsync(true);
+
+            // Act
+            dynamic result = await _auctionController.CreateAuction(auction);
+        
+            // Assert
+            Assert.IsType<CreatedAtActionResult>(result.Result);
+            Assert.Equal("GetAuction", result.Result.ActionName);
+            Assert.IsType<AuctionDto>(result.Result.Value);
         }
     }
 }
