@@ -1,3 +1,5 @@
+using AuctionService.IntegrationTests.Utils;
+
 namespace AuctionService.IntegrationTests.Fixtures
 {
     /// <summary>
@@ -20,31 +22,16 @@ namespace AuctionService.IntegrationTests.Fixtures
         {
             builder.ConfigureTestServices(services =>
             {
-                // Replace the existing AuctionContext with a new one 
-                // that uses the Testcontainers Postgres instance.
-                ServiceDescriptor descriptor = services.SingleOrDefault(
-                    d => d.ServiceType ==
-                         typeof(DbContextOptions<AuctionContext>))!;
-
-                if (descriptor is not null)
-                    services.Remove(descriptor);
+                services.RemoveDbContext<AuctionContext>();
 
                 services.AddDbContext<AuctionContext>(options =>
                 {
                     options.UseNpgsql(_postgresSqlContainer.GetConnectionString());
                 });
 
-                // Migrate the test database.
-                ServiceProvider sp = services.BuildServiceProvider();
-
-                using var scope = sp.CreateScope();
-                var scopedServices = scope.ServiceProvider;
-                var db = scopedServices.GetRequiredService<AuctionContext>();
-
-                db.Database.Migrate();
-
-                // Add the MassTransitTestHarness to the service collection.
                 services.AddMassTransitTestHarness();
+
+                services.EnsureCreated<AuctionContext>();
             });
         }
     }
