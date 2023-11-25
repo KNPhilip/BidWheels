@@ -1,5 +1,3 @@
-using AuctionService.IntegrationTests.Utils;
-
 namespace AuctionService.IntegrationTests.Fixtures
 {
     /// <summary>

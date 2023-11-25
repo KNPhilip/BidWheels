@@ -1,5 +1,3 @@
-using AuctionService.Entities;
-
 namespace AuctionService.UnitTests;
 
 public class AuctionEntityTests
