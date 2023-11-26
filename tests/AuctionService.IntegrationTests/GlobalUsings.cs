@@ -13,3 +13,5 @@ global using System.Net.Http.Json;
 global using AuctionService.Dtos;
 global using WebMotions.Fake.Authentication.JwtBearer;
 global using System.Net;
+global using Contracts;
+global using MassTransit.Testing;
