@@ -11,3 +11,5 @@ global using AuctionService.IntegrationTests.Fixtures;
 global using AuctionService.IntegrationTests.Utils;
 global using System.Net.Http.Json;
 global using AuctionService.Dtos;
+global using WebMotions.Fake.Authentication.JwtBearer;
+global using System.Net;

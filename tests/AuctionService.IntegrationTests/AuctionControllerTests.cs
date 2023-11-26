@@ -1,5 +1,3 @@
-using System.Net;
-
 namespace AuctionService.IntegrationTests
 {
     public class AuctionControllerTests : IClassFixture<CustomWebAppFactory>, IAsyncLifetime
@@ -27,19 +25,21 @@ namespace AuctionService.IntegrationTests
         }
 
         [Fact]
-        public async Task GetAuction_WithValidId_ReturnAuction()
+        public async Task GetAuction_WithValidGuid_ReturnAuction()
         {
             // Arrange
 
             // Act
-            AuctionDto? response = await _httpClient.GetFromJsonAsync<AuctionDto>($"api/auctions/{carGuid}");
+            HttpResponseMessage response = await _httpClient.GetAsync($"api/auctions/{carGuid}");
 
             // Assert
-            Assert.Equal("GT", response!.Model);
+            response.EnsureSuccessStatusCode();
+            AuctionDto? auction = await response.Content.ReadFromJsonAsync<AuctionDto>();
+            Assert.Equal("GT", auction!.Model);
         }
 
         [Fact]
-        public async Task GetAuction_WithInvalidId_Returns404NotFound()
+        public async Task GetAuction_WithNotExistingGuid_Returns404NotFound()
         {
             // Arrange
 
@@ -62,6 +62,40 @@ namespace AuctionService.IntegrationTests
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
+        [Fact]
+        public async Task CreateAuction_WithNoAuth_Returns401Unauthorized()
+        {
+            // Arrange
+            CreateAuctionDto request = new()
+            {
+                Make = "Ford",
+            };
+
+            // Act
+            HttpResponseMessage response = await _httpClient.PostAsJsonAsync($"api/auctions", request);
+
+            // Assert
+            Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task CreateAuction_Valid_Returns201Created()
+        {
+            // Arrange
+            string seller = "Philip";
+            CreateAuctionDto request = GetAuctionForCreate();
+            _httpClient.SetFakeJwtBearerToken(AuthHelper.GetBearerForUser(seller));
+
+            // Act
+            HttpResponseMessage response = await _httpClient.PostAsJsonAsync($"api/auctions", request);
+
+            // Assert
+            response.EnsureSuccessStatusCode();
+            Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+            AuctionDto? createdAuction = await response.Content.ReadFromJsonAsync<AuctionDto>()!;
+            Assert.Equal(seller, createdAuction!.Seller);
+        }
+
         public Task InitializeAsync() => Task.CompletedTask;
 
         public Task DisposeAsync()
@@ -71,5 +105,17 @@ namespace AuctionService.IntegrationTests
             DataHelper.ReinitDbForTests(db);
             return Task.CompletedTask;
         }
+
+        private static CreateAuctionDto GetAuctionForCreate() =>
+            new()
+            {
+                Make = "test",
+                Model = "testModel",
+                ImageUrl = "test",
+                Year = 2005,
+                Mileage = 10000,
+                ReservePrice = 10,
+                Color = "Red"
+            };
     }
 }

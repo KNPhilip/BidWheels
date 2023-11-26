@@ -30,6 +30,12 @@ namespace AuctionService.IntegrationTests.Fixtures
                 services.AddMassTransitTestHarness();
 
                 services.EnsureCreated<AuctionContext>();
+
+                services.AddAuthentication(FakeJwtBearerDefaults.AuthenticationScheme)
+                    .AddFakeJwtBearer(options =>
+                    {
+                        options.BearerValueType = FakeJwtBearerBearerValueType.Jwt;
+                    });
             });
         }
     }
