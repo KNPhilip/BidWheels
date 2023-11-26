@@ -96,6 +96,55 @@ namespace AuctionService.IntegrationTests
             Assert.Equal(seller, createdAuction!.Seller);
         }
 
+        [Fact]
+        public async Task CreateAuction_WithInvalidCreateAuctionDto_Returns400BadRequest()
+        {
+            // Arrange
+            CreateAuctionDto request = GetAuctionForCreate();
+            request.Make = null;
+            _httpClient.SetFakeJwtBearerToken(AuthHelper.GetBearerForUser("bob"));
+
+            // Act
+            HttpResponseMessage response = await _httpClient.PostAsJsonAsync($"api/auctions", request);
+
+            // Assert
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task UpdateAuction_WithValidUpdateDtoAndUser_Returns200OK()
+        {
+            // Arrange
+            UpdateAuctionDto request = new() 
+            {
+                Color = "Blue"
+            };
+            _httpClient.SetFakeJwtBearerToken(AuthHelper.GetBearerForUser("bob"));
+
+            // Act
+            HttpResponseMessage response = await _httpClient.PutAsJsonAsync($"api/auctions/{carGuid}", request);
+
+            // Assert
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task UpdateAuction_WithValidUpdateDtoAndInvalidUser_Returns403Forbidden()
+        {
+            // Arrange
+            UpdateAuctionDto request = new() 
+            {
+                Color = "Blue"
+            };
+            _httpClient.SetFakeJwtBearerToken(AuthHelper.GetBearerForUser("Philip"));
+
+            // Act
+            HttpResponseMessage response = await _httpClient.PutAsJsonAsync($"api/auctions/{carGuid}", request);
+
+            // Assert
+            Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
+        }
+
         public Task InitializeAsync() => Task.CompletedTask;
 
         public Task DisposeAsync()
