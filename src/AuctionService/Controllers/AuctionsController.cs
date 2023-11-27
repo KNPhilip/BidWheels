@@ -25,8 +25,8 @@ namespace AuctionService.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<AuctionDto>>> GetAllAuctions(string date) =>
-            Ok(await _auctionRepository.GetAuctionsAsync(date));
+        public async Task<ActionResult<List<AuctionDto>>> GetAllAuctions(string? date) =>
+            Ok(await _auctionRepository.GetAuctionsAsync(date!));
 
         [HttpGet("{id}")]
         public async Task<ActionResult<AuctionDto>> GetAuction(Guid id)

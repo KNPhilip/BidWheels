@@ -1,16 +1,3 @@
-using AuctionService.Controllers;
-using AuctionService.Dtos;
-using AuctionService.Entities;
-using AuctionService.Repositories;
-using AuctionService.RequestHelpers;
-using AuctionService.UnitTests.Utils;
-using AutoFixture;
-using AutoMapper;
-using MassTransit;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
-
 namespace AuctionService.UnitTests
 {
     public class AuctionControllerTests

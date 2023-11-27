@@ -71,3 +71,8 @@ catch (Exception ex)
 }
 
 app.Run();
+
+/// <summary>
+/// Represents the entry point for the AuctionService program.
+/// </summary>
+public partial class Program {}

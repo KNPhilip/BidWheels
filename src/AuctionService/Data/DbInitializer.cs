@@ -22,7 +22,14 @@ namespace AuctionService.Data
                 return;
             }
 
-            List<Auction> auctions = new()
+            List<Auction> auctions = GetDbAuctions();
+
+            context.AddRange(auctions);
+            context.SaveChanges();
+        }
+
+        public static List<Auction> GetDbAuctions() =>
+            new()
             {
                 // 1 Ford GT
                 new Auction
@@ -203,9 +210,5 @@ namespace AuctionService.Data
                     }
                 }
             };
-
-            context.AddRange(auctions);
-            context.SaveChanges();
-        }
     }
 }
