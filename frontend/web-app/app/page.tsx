@@ -1,9 +1,9 @@
+import Listings from './auctions/Listings';
+
 const Home = () => {
   return (
     <div>
-      <h3 className='text-3xl font-semibold'>
-        Welcome to BidWheels!
-      </h3>
+      <Listings />
     </div>
   )
 }
