@@ -13,7 +13,7 @@ const Listings = async () => {
     const data = await getData();
 
     return (
-        <div>
+        <div className="grid grid-cols-4 gap-6">
             {data && data.result.map((auction: any) => (
                 <AuctionCard auction={auction} key={auction.id} />
             ))}
