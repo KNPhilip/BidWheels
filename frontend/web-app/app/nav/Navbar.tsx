@@ -1,4 +1,5 @@
 import { AiOutlineCar } from 'react-icons/ai'
+import Search from './Search';
 
 const Navbar = () => {
     return (
@@ -7,7 +8,7 @@ const Navbar = () => {
                 <AiOutlineCar size={34} />
                 <div>BidWheels Auctions</div>
             </div>
-            <div>Search</div>
+            <Search />
             <div>Login</div>
         </header>
     )
