@@ -14,7 +14,7 @@ public static class Config
     public static IEnumerable<ApiScope> ApiScopes =>
         new ApiScope[]
         {
-            new ApiScope("auctionApp", "Auction app full access"),
+            new("auctionApp", "Auction app full access"),
         };
 
     public static IEnumerable<Client> Clients =>
@@ -43,7 +43,8 @@ public static class Config
                 RedirectUris = { "http://localhost:3000/api/auth/callback/id-server" },
                 AllowOfflineAccess = true,
                 AllowedScopes = { "openid", "profile", "auctionApp" },
-                AccessTokenLifetime = 3600*24*30
+                AccessTokenLifetime = 3600*24*30,
+                AlwaysIncludeUserClaimsInIdToken = true
             }
         };
 }
