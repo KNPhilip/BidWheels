@@ -1,8 +1,12 @@
 import Search from './Search';
 import Logo from './Logo';
 import LoginButton from './LoginButton';
+import { getCurrentUser } from '../actions/authActions';
+import UserActions from './UserActions';
 
-const Navbar = () => {
+const Navbar = async () => {
+    const user = await getCurrentUser();
+
     return (
         <header className="
             sticky 
@@ -18,7 +22,11 @@ const Navbar = () => {
         ">
             <Logo />
             <Search />
-            <LoginButton />
+            { user ? (
+                <UserActions />
+            ) : (
+                <LoginButton />
+            )}
         </header>
     )
 }
