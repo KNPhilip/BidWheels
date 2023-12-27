@@ -1,15 +1,24 @@
 'use client'
 
 import { useParamStore } from '@/hooks/useParamsStore'
+import { usePathname, useRouter } from 'next/navigation'
 import React from 'react'
 import { AiOutlineCar } from 'react-icons/ai'
 
 const Logo = () => {
+    const router = useRouter();
+    const pathName = usePathname();
     const reset = useParamStore(state => state.reset);
+
+    function doReset() {
+        if (pathName !== '/')
+            router.push('/');
+        reset();
+    }
 
     return (
         <div 
-            onClick={reset}
+            onClick={doReset}
             className="
                 curser-pointer 
                 flex 
