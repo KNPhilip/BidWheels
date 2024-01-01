@@ -18,7 +18,9 @@ const Listings = () => {
         pageSize: state.pageSize,
         searchTerm: state.searchTerm,
         orderBy: state.orderBy,
-        filterBy: state.filterBy
+        filterBy: state.filterBy,
+        seller: state.seller,
+        winner: state.winner
     }), shallow)
     const setParams = useParamStore(state => state.setParams);
     const url = qs.stringifyUrl({url: '', query: params})
