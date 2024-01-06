@@ -48,11 +48,7 @@ async function getHeaders() {
     const token = await getTokenWorkaround();
     const headers = { 'Content-type': 'application/json' } as any;
 
-    if (token) {
-        headers.Authorization = `Bearer ${token.access_token}`;
-    }
-
-    return headers;
+    return token ? headers.Authorization = `Bearer ${token.access_token}` : headers;
 }
 
 async function handleResponse(response: Response) {
