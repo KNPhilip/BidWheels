@@ -43,9 +43,8 @@ const AuctionForm = ({ auction }: Props) => {
                     id = auction.id;
                 }
             }
-            if (res.error) {
-                throw res.error;
-            }
+            if (res.error) throw res.error;
+            
             router.push(`/auctions/details/${id}`)
         } catch (error: any) {
             toast.error(error.status + ' ' + error.message)
