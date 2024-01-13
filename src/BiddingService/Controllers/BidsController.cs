@@ -51,5 +51,16 @@ namespace BiddingService.Controllers
 
             return Ok(bid);
         }
+
+        [HttpGet("{auctionId}")]
+        public async Task<ActionResult<List<Bid>>> GetBidsForAuction(string auctionId)
+        {
+            List<Bid>? bids = await DB.Find<Bid>()
+                .Match(b => b.AuctionId == auctionId)
+                .Sort(b => b.Descending(b => b.BidTime))
+                .ExecuteAsync();
+
+            return bids;
+        }
     }
 }
