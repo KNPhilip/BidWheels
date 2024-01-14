@@ -1,6 +1,8 @@
 using AutoMapper;
+using BiddingService.Contracts;
 using BiddingService.Dtos;
 using BiddingService.Models;
+using MassTransit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Entities;
@@ -9,7 +11,7 @@ namespace BiddingService.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class BidsController(IMapper mapper) : ControllerBase
+    public class BidsController(IMapper mapper, IPublishEndpoint publishEndpoint) : ControllerBase
     {
         [HttpPost, Authorize] 
         public async Task<ActionResult<BidDto>> PlaceBid(string auctionId, int amount)
@@ -50,6 +52,8 @@ namespace BiddingService.Controllers
             }
 
             await DB.SaveAsync(bid);
+
+            await publishEndpoint.Publish(mapper.Map<BidPlaced>(bid));
 
             return Ok(mapper.Map<BidDto>(bid));
         }

@@ -1,4 +1,5 @@
 using AutoMapper;
+using BiddingService.Contracts;
 using BiddingService.Dtos;
 using BiddingService.Models;
 
@@ -9,6 +10,7 @@ namespace BiddingService.RequestHelpers
         public MappingProfiles()
         {
             CreateMap<Bid, BidDto>();
+            CreateMap<Bid, BidPlaced>();
         }
     }
 }
