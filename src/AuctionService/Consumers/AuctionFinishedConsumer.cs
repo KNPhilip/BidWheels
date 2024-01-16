@@ -18,7 +18,7 @@ namespace AuctionService.Consumers
         {
             Console.WriteLine("--> Consuming auction finished");
 
-            Auction? auction = await _context.Auctions.FindAsync(context.Message.AuctionId);
+            Auction? auction = await _context.Auctions.FindAsync(Guid.Parse(context.Message.AuctionId!));
 
             if (context.Message.ItemSold)
             {
