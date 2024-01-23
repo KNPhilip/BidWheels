@@ -21,7 +21,7 @@ public class SeedData
         if (userMgr.Users.Any()) return;
 
         ApplicationUser alice = userMgr.FindByNameAsync("alice").Result;
-        if (alice == null)
+        if (alice is null)
         {
             alice = new ApplicationUser
             {
@@ -44,7 +44,7 @@ public class SeedData
             Log.Debug("alice already exists");
 
         ApplicationUser bob = userMgr.FindByNameAsync("bob").Result;
-        if (bob == null)
+        if (bob is null)
         {
             bob = new ApplicationUser
             {
@@ -56,9 +56,9 @@ public class SeedData
             if (!result.Succeeded)
                 throw new Exception(result.Errors.First().Description);
 
-            result = userMgr.AddClaimsAsync(bob, new Claim[]{
+            result = userMgr.AddClaimsAsync(bob, [
                 new(JwtClaimTypes.Name, "Bob Smith")
-            }).Result;
+            ]).Result;
             if (!result.Succeeded)
                 throw new Exception(result.Errors.First().Description);
             Log.Debug("bob created");

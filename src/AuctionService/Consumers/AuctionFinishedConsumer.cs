@@ -5,20 +5,13 @@ using MassTransit;
 
 namespace AuctionService.Consumers
 {
-    public class AuctionFinishedConsumer : IConsumer<AuctionFinished>
+    public class AuctionFinishedConsumer(AuctionContext dbContext) : IConsumer<AuctionFinished>
     {
-        private readonly AuctionContext _context;
-
-        public AuctionFinishedConsumer(AuctionContext context)
-        {
-            _context = context;    
-        }
-
         public async Task Consume(ConsumeContext<AuctionFinished> context)
         {
             Console.WriteLine("--> Consuming auction finished");
 
-            Auction? auction = await _context.Auctions.FindAsync(Guid.Parse(context.Message.AuctionId!));
+            Auction? auction = await dbContext.Auctions.FindAsync(Guid.Parse(context.Message.AuctionId!));
 
             if (context.Message.ItemSold)
             {
@@ -29,7 +22,7 @@ namespace AuctionService.Consumers
             auction!.Status = auction.SoldAmount > auction.ReservePrice
                 ? Status.Finished : Status.ReserveNotMet;
 
-            await _context.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
         }
     }
 }

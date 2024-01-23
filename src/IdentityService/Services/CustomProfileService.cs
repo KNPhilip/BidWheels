@@ -7,19 +7,12 @@ using Microsoft.AspNetCore.Identity;
 
 namespace IdentityService.Services
 {
-    public class CustomProfileService : IProfileService
+    public class CustomProfileService(UserManager<ApplicationUser> userManager) : IProfileService
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-
-        public CustomProfileService(UserManager<ApplicationUser> userManager)
-        {
-            _userManager = userManager;
-        }
-
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
-            ApplicationUser user = await _userManager.GetUserAsync(context.Subject);
-            IList<Claim> existingClaims = await _userManager.GetClaimsAsync(user);
+            ApplicationUser user = await userManager.GetUserAsync(context.Subject);
+            IList<Claim> existingClaims = await userManager.GetClaimsAsync(user);
 
             List<Claim> claims =
             [
