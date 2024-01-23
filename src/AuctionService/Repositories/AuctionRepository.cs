@@ -33,7 +33,7 @@ namespace AuctionService.Repositories
 
         public async Task<List<AuctionDto>> GetAuctionsAsync(string request)
         {
-            var query = _context.Auctions.OrderBy(x => x.Item!.Make).AsQueryable();
+            IQueryable<Auction> query = _context.Auctions.OrderBy(x => x.Item!.Make).AsQueryable();
 
             if (!string.IsNullOrEmpty(request))
                 query = query.Where(x => x.UpdatedAt.CompareTo(DateTime.Parse(request).ToUniversalTime()) > 0);

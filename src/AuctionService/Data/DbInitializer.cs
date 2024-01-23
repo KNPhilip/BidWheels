@@ -7,7 +7,7 @@ namespace AuctionService.Data
     {
         public static void InitDb(WebApplication app)
         {
-            using var scope = app.Services.CreateScope();
+            using IServiceScope scope = app.Services.CreateScope();
 
             SeedData(scope.ServiceProvider.GetService<AuctionContext>()!);
         }
@@ -29,8 +29,7 @@ namespace AuctionService.Data
         }
 
         public static List<Auction> GetDbAuctions() =>
-            new()
-            {
+            [
                 // 1 Ford GT
                 new Auction
                 {
@@ -209,6 +208,6 @@ namespace AuctionService.Data
                         ImageUrl = "https://cdn.pixabay.com/photo/2017/08/02/19/47/vintage-2573090_960_720.jpg"
                     }
                 }
-            };
+            ];
     }
 }

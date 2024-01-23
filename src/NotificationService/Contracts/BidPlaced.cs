@@ -1,4 +1,4 @@
-namespace AuctionService.Contracts
+namespace Contracts
 {
     public class BidPlaced
     {

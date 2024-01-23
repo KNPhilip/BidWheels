@@ -20,7 +20,7 @@ namespace SearchService.Data
 
             Int64 count = await DB.CountAsync<Item>();
 
-            using var scope = app.Services.CreateScope();
+            using IServiceScope scope = app.Services.CreateScope();
 
             AuctionServiceHttpClient httpClient = scope.ServiceProvider.GetRequiredService<AuctionServiceHttpClient>();
 

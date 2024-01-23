@@ -6,7 +6,7 @@ using SearchService.Consumers;
 using SearchService.Data;
 using SearchService.Services;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
@@ -38,7 +38,7 @@ builder.Services.AddMassTransit(config =>
 });
 
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 app.UseAuthorization();
 

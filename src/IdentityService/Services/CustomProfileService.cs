@@ -21,10 +21,10 @@ namespace IdentityService.Services
             ApplicationUser user = await _userManager.GetUserAsync(context.Subject);
             IList<Claim> existingClaims = await _userManager.GetClaimsAsync(user);
 
-            List<Claim> claims = new()
-            {
+            List<Claim> claims =
+            [
                 new("username", user.UserName)
-            };
+            ];
 
             context.IssuedClaims.AddRange(claims);
             context.IssuedClaims.Add(existingClaims

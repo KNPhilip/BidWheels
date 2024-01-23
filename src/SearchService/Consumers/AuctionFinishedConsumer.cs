@@ -9,7 +9,7 @@ namespace SearchService.Consumers
     {
         public async Task Consume(ConsumeContext<AuctionFinished> context)
         {
-            Item? auction = await DB.Find<Item>().OneAsync(context.Message.AuctionId);
+            Item? auction = await DB.Find<Item>().OneAsync(context.Message.AuctionId!);
 
             if (context.Message.ItemSold)
             {

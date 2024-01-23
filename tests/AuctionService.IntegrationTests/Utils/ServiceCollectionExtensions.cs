@@ -25,9 +25,9 @@ namespace AuctionService.IntegrationTests.Utils
         {
             ServiceProvider sp = services.BuildServiceProvider();
 
-            using var scope = sp.CreateScope();
-            var scopedServices = scope.ServiceProvider;
-            var db = scopedServices.GetRequiredService<AuctionContext>();
+            using IServiceScope scope = sp.CreateScope();
+            IServiceProvider scopedServices = scope.ServiceProvider;
+            AuctionContext db = scopedServices.GetRequiredService<AuctionContext>();
 
             db.Database.Migrate();
             DataHelper.InitDbForTests(db);
