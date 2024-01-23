@@ -1,7 +1,10 @@
 global using MassTransit;
+global using Microsoft.AspNetCore.SignalR;
+global using NotificationService.Hubs;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-WebApplication app = builder.Build();
+
+builder.Services.AddSignalR();
 
 builder.Services.AddMassTransit(config => 
 {
@@ -18,5 +21,9 @@ builder.Services.AddMassTransit(config =>
         cfg.ConfigureEndpoints(context);
     });
 });
+
+WebApplication app = builder.Build();
+
+app.MapHub<NotificationHub>("/notifications");
 
 app.Run();
