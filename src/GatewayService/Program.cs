@@ -14,7 +14,20 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.TokenValidationParameters.NameClaimType = "username";
     });
 
+builder.Services.AddCors(options => 
+{
+    options.AddPolicy("CustomPolicy", policy => 
+    {
+        policy.AllowAnyHeader();
+        policy.AllowAnyMethod();
+        policy.AllowCredentials();
+        policy.WithOrigins(builder.Configuration["ClientApp"]!);
+    });
+});
+
 WebApplication app = builder.Build();
+
+app.UseCors();
 
 app.MapReverseProxy();
 
