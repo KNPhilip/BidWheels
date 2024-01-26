@@ -3,17 +3,8 @@ using SearchService.Models;
 
 namespace SearchService.Services
 {
-    public class AuctionServiceHttpClient
+    public class AuctionServiceHttpClient(HttpClient httpClient, IConfiguration config)
     {
-        private readonly IConfiguration _config;
-        private readonly HttpClient _httpClient;
-
-        public AuctionServiceHttpClient(HttpClient httpClient, IConfiguration config)
-        {
-            _httpClient = httpClient;
-            _config = config;
-        }
-
         public async Task<List<Item>> GetItemsForSearchDb()
         {
             string? lastupdated = await DB.Find<Item, string>()
@@ -21,8 +12,8 @@ namespace SearchService.Services
                 .Project(x => x.UpdatedAt.ToString())
                 .ExecuteFirstAsync();
 
-            List<Item>? response = await _httpClient.GetFromJsonAsync<List<Item>>(
-                _config["AuctionServiceUrl"]
+            List<Item>? response = await httpClient.GetFromJsonAsync<List<Item>>(
+                config["AuctionServiceUrl"]
                 + "/api/auctions?date=" + lastupdated);
 
             return response!;

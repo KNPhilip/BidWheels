@@ -1,21 +1,18 @@
 global using MassTransit;
+global using Microsoft.AspNetCore.SignalR;
+global using NotificationService.Hubs;
+global using Contracts;
+global using NotificationService.Consumers;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-WebApplication app = builder.Build();
+
+builder.Services.AddSignalR();
 
 builder.Services.AddMassTransit(config => 
 {
-    config.AddEntityFrameworkOutbox<AuctionContext>(options => 
-    {
-       options.QueryDelay = TimeSpan.FromSeconds(10); 
-       options.UsePostgres();
-       options.UseBusOutbox();
-    });
+    config.AddConsumersFromNamespaceContaining<AuctionCreatedConsumer>();
 
-    // Mass Transit will automatically recognize any other consumers within the same namespace.
-    config.AddConsumersFromNamespaceContaining<AuctionCreatedFaultConsumer>();
-
-    config.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("auction", false));
+    config.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("nt", false));
 
     config.UsingRabbitMq((context, cfg) => 
     {
@@ -28,5 +25,9 @@ builder.Services.AddMassTransit(config =>
         cfg.ConfigureEndpoints(context);
     });
 });
+
+WebApplication app = builder.Build();
+
+app.MapHub<NotificationHub>("/notifications");
 
 app.Run();

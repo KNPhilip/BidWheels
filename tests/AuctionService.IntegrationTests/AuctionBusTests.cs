@@ -33,7 +33,7 @@ namespace AuctionService.IntegrationTests
 
         public Task DisposeAsync()
         {
-            using var scope = _factory.Services.CreateScope();
+            using IServiceScope scope = _factory.Services.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<AuctionContext>();
             DataHelper.ReinitDbForTests(db);
             return Task.CompletedTask;

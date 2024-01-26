@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddReverseProxy()
     .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
@@ -14,7 +14,20 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.TokenValidationParameters.NameClaimType = "username";
     });
 
-var app = builder.Build();
+builder.Services.AddCors(options => 
+{
+    options.AddPolicy("CustomPolicy", policy => 
+    {
+        policy.AllowAnyHeader();
+        policy.AllowAnyMethod();
+        policy.AllowCredentials();
+        policy.WithOrigins(builder.Configuration["ClientApp"]!);
+    });
+});
+
+WebApplication app = builder.Build();
+
+app.UseCors();
 
 app.MapReverseProxy();
 

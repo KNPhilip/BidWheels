@@ -11,7 +11,7 @@ namespace SearchService.Consumers
         {
             Console.WriteLine("--> Consuming bid placed");
 
-            Item? auction = await DB.Find<Item>().OneAsync(context.Message.AuctionId);
+            Item? auction = await DB.Find<Item>().OneAsync(context.Message.AuctionId!);
 
             if (context.Message.BidStatus!.Contains("Accepted") 
                 && context.Message.Amount > auction!.CurrentHighBid)
