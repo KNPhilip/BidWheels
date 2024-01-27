@@ -91,7 +91,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
       - RabbitMQ__Host=rabbitmq
-      - ConntectionStrings__BidDbConnection=mongodb://root:mongopw@mongodb
+      - ConnectionStrings__BidDbConnection=mongodb://root:mongopw@mongodb
       - IdentityServiceUrl=http://identity-svc
       - GrpcAuction=http://auction-svc:7777
     ports:
