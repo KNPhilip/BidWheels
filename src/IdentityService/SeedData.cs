@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using IdentityModel;
+﻿using IdentityModel;
 using IdentityService.Data;
 using IdentityService.Models;
 using Microsoft.AspNetCore.Identity;
@@ -33,9 +32,9 @@ public class SeedData
             if (!result.Succeeded)
                 throw new Exception(result.Errors.First().Description);
 
-            result = userMgr.AddClaimsAsync(alice, new Claim[]{
+            result = userMgr.AddClaimsAsync(alice, [
                 new(JwtClaimTypes.Name, "Alice Smith"),
-            }).Result;
+            ]).Result;
             if (!result.Succeeded)
                 throw new Exception(result.Errors.First().Description);
             Log.Debug("alice created");
