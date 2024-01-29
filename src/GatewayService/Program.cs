@@ -16,7 +16,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddCors(options => 
 {
-    options.AddPolicy("CustomPolicy", policy => 
+    options.AddPolicy("customPolicy", policy => 
     {
         policy.AllowAnyHeader();
         policy.AllowAnyMethod();
