@@ -62,7 +62,35 @@ const BidList = ({user, auction}: Props) => {
             </div>
 
             <div className="px-2 pb-2 text-gray-500">
-                <BidForm auctionId={auction.id} highBid={highBid} />
+                {!user ? (
+                    <div 
+                        className="
+                            flex 
+                            items-center 
+                            justify-center 
+                            p-2 
+                            text-lg 
+                            font-semibold
+                        "
+                    >
+                        Please login to place a bid
+                    </div>
+                ) :  user && user.username === auction.seller ? (
+                    <div 
+                        className="
+                            flex 
+                            items-center 
+                            justify-center 
+                            p-2 
+                            text-lg 
+                            font-semibold
+                        "
+                    >
+                        You cannot bid on your own auction.
+                    </div>
+                ) : (
+                    <BidForm auctionId={auction.id} highBid={highBid} />
+                )}
             </div>
         </div>
     )
