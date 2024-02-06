@@ -2,12 +2,14 @@
 
 import { useAuctionStore } from '@/hooks/useAuctionStore';
 import { useBidStore } from '@/hooks/useBidStore';
-import { Auction, Bid } from '@/types';
+import { Auction, AuctionFinished, Bid } from '@/types';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { User } from 'next-auth';
 import { ReactNode, useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 import AuctionCreatedToast from '../components/AuctionCreatedToast';
+import { getDetailedViewData } from '../actions/auctionActions';
+import AuctionFinishedToast from '../components/AuctionFinishedToast';
 
 type Props = {
     children: ReactNode
@@ -45,6 +47,19 @@ const SignalRProvider = ({children, user}: Props) => {
                         if (user?.username !== auction.seller) {
                             return toast(<AuctionCreatedToast auction={auction} />, {duration: 5000});
                         }
+                    });
+
+                    connection.on('AuctionFinished', (finishedAuction: AuctionFinished) => {
+                        const auction = getDetailedViewData(finishedAuction.auctionId);
+                        return toast.promise(auction, {
+                            loading: 'Loading',
+                            success: (auction) => 
+                                <AuctionFinishedToast 
+                                    finishedAuction={finishedAuction} 
+                                    auction={auction} 
+                                />,
+                            error: (err) => `Auction finished!`
+                        }, {success: {duration: 5000, icon: null}})
                     });
                 }).catch(err => console.error('SignalR connection failed', err));
         }
