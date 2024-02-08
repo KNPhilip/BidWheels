@@ -14,13 +14,13 @@ type Props = {
     callbackUrl?: string
 }
 
-export default ({
+export default function EmptyFilter({
     title = 'No matches for this filter',
     subtitle = 'Try changing or resetting the filter',
     showReset,
     showLogin,
     callbackUrl
-}: Props) => {
+}: Props) {
     const reset = useParamStore(state => state.reset);
 
     return (

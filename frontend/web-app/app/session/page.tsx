@@ -26,4 +26,4 @@ const Session = async () => {
     )
 }
 
-export default Session();
+export default Session;
