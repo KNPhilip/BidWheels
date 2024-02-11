@@ -1,3 +1,9 @@
+networks:
+  custom:
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+
 services:
   postgres:
     image: postgres
@@ -7,6 +13,8 @@ services:
       - 5432:5432
     volumes:
       - /var/lib/postgresql/data
+    networks:
+      custom:
   mongodb:
     image: mongo
     environment:
@@ -16,11 +24,15 @@ services:
       - 27017:27017
     volumes:
       - /var/lib/mongodb/data
+    networks:
+      custom:
   rabbitmq:
     image: rabbitmq:3-management-alpine
     ports:
       - 5672:5672
       - 15672:15672
+    networks:
+      custom:
   auction-svc:
     image: knphilip/auction-svc:latest
     build:
@@ -40,6 +52,8 @@ services:
     ports:
       - 7001:80
       - 7777:7777
+    networks:
+      custom:
     depends_on:
       - rabbitmq
       - postgres
@@ -56,6 +70,8 @@ services:
       - AuctionServiceUrl=http://auction-svc
     ports:
       - 7002:80
+    networks:
+      custom:
     depends_on:
       - rabbitmq
       - mongodb
@@ -70,6 +86,9 @@ services:
       - ConnectionStrings__Default=Server=postgres:5432;User Id=postgres;Password=postgrespw;Database=identity
     ports:
       - 80:80
+    networks:
+      custom:
+        ipv4_address: 10.5.0.200
     depends_on:
       - postgres
   gateway-svc:
@@ -82,6 +101,8 @@ services:
       - ASPNETCORE_URLS=http://+:80
     ports:
       - 6001:80
+    networks:
+      custom:
   bid-svc:
     image: knphilip/bid-svc:latest
     build:
@@ -96,6 +117,8 @@ services:
       - GrpcAuction=http://auction-svc:7777
     ports:
       - 7003:80
+    networks:
+      custom:
     depends_on:
       - mongodb
       - rabbitmq
@@ -110,6 +133,8 @@ services:
       - RabbitMQ__Host=rabbitmq
     ports:
       - 7004:80
+    networks:
+      custom:
     depends_on:
       - rabbitmq
   web-app:
@@ -122,7 +147,7 @@ services:
     ports:
       - 3000:3000
     extra_hosts:
-      - id.bidwheels.com:172.18.0.4
+      - id.bidwheels.com:10.5.0.200
     environment:
       - NEXTAUTH_SECRET=somethingreallyreallysecret
       - NEXTAUTH_URL=http://web-app
@@ -130,3 +155,5 @@ services:
       - API_URL=http://gateway-svc/
       - ID_URL=http://id.bidwheels.com
       - NEXT_PUBLIC_NOTIFY_URL=http://gateway-svc/notifications
+    networks:
+      custom:
