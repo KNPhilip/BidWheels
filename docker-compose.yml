@@ -83,7 +83,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
       - ASPNETCORE_URLS=http://+:80
-      - ClientApp=http://app.bidwheels.com
+      - ClientApp=https://app.bidwheels.com
       - ConnectionStrings__Default=Server=postgres:5432;User Id=postgres;Password=postgrespw;Database=identity
       - VIRTUAL_HOST=id.bidwheels.com
     networks:
@@ -99,7 +99,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
       - ASPNETCORE_URLS=http://+:80
-      - ClientApp=http://app.bidwheels.com
+      - ClientApp=https://app.bidwheels.com
       - VIRTUAL_HOST=api.bidwheels.com
     ports:
       - 6001:80
