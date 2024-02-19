@@ -5,7 +5,7 @@ using SearchService.Services;
 
 namespace SearchService.Data
 {
-    public class DbInitializer
+    public sealed class DbInitializer
     {
         public static async Task InitDb(WebApplication app)
         {

@@ -4,7 +4,7 @@ using SearchService.Models;
 
 namespace SearchService.RequestHelpers
 {
-    public class MappingProfiles : Profile
+    public sealed class MappingProfiles : Profile
     {
         public MappingProfiles()
         {

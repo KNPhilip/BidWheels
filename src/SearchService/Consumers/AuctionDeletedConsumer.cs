@@ -6,7 +6,7 @@ using SearchService.Models;
 
 namespace SearchService.Consumers
 {
-    public class AuctionDeletedConsumer : IConsumer<AuctionDeleted>
+    public sealed class AuctionDeletedConsumer : IConsumer<AuctionDeleted>
     {
         public async Task Consume(ConsumeContext<AuctionDeleted> context)
         {
