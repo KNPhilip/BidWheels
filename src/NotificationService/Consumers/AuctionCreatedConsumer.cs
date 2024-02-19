@@ -1,6 +1,6 @@
 namespace NotificationService.Consumers
 {
-    public class AuctionCreatedConsumer(IHubContext<NotificationHub> hubContext) : IConsumer<AuctionCreated>
+    public sealed class AuctionCreatedConsumer(IHubContext<NotificationHub> hubContext) : IConsumer<AuctionCreated>
     {
         public async Task Consume(ConsumeContext<AuctionCreated> context)
         {

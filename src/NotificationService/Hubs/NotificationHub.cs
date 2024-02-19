@@ -1,4 +1,4 @@
 namespace NotificationService.Hubs
 {
-    public class NotificationHub : Hub { }
+    public sealed class NotificationHub : Hub { }
 }
