@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace IdentityService.Services
 {
-    public class CustomProfileService(UserManager<ApplicationUser> userManager) : IProfileService
+    public sealed class CustomProfileService(UserManager<ApplicationUser> userManager) : IProfileService
     {
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {

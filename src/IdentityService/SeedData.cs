@@ -5,64 +5,77 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
-namespace IdentityService;
-
-public class SeedData
+namespace IdentityService
 {
-    public static void EnsureSeedData(WebApplication app)
+    public sealed class SeedData
     {
-        using IServiceScope scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
-        ApplicationDbContext context = scope.ServiceProvider.GetService<ApplicationDbContext>();
-        context.Database.Migrate();
-
-        UserManager<ApplicationUser> userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-
-        if (userMgr.Users.Any()) return;
-
-        ApplicationUser alice = userMgr.FindByNameAsync("alice").Result;
-        if (alice is null)
+        public static void EnsureSeedData(WebApplication app)
         {
-            alice = new ApplicationUser
+            using IServiceScope scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            ApplicationDbContext context = scope.ServiceProvider.GetService<ApplicationDbContext>();
+            context.Database.Migrate();
+
+            UserManager<ApplicationUser> userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+            if (userMgr.Users.Any()) return;
+
+            ApplicationUser alice = userMgr.FindByNameAsync("alice").Result;
+            if (alice is null)
             {
-                UserName = "alice",
-                Email = "AliceSmith@email.com",
-                EmailConfirmed = true,
-            };
-            IdentityResult result = userMgr.CreateAsync(alice, "Pass123$").Result;
-            if (!result.Succeeded)
-                throw new Exception(result.Errors.First().Description);
+                alice = new ApplicationUser
+                {
+                    UserName = "alice",
+                    Email = "AliceSmith@email.com",
+                    EmailConfirmed = true,
+                };
+                IdentityResult result = userMgr.CreateAsync(alice, "Pass123$").Result;
+                if (!result.Succeeded)
+                {
+                    throw new Exception(result.Errors.First().Description);
+                }
 
-            result = userMgr.AddClaimsAsync(alice, [
-                new(JwtClaimTypes.Name, "Alice Smith"),
-            ]).Result;
-            if (!result.Succeeded)
-                throw new Exception(result.Errors.First().Description);
-            Log.Debug("alice created");
-        }
-        else
-            Log.Debug("alice already exists");
-
-        ApplicationUser bob = userMgr.FindByNameAsync("bob").Result;
-        if (bob is null)
-        {
-            bob = new ApplicationUser
+                result = userMgr.AddClaimsAsync(alice, [
+                    new(JwtClaimTypes.Name, "Alice Smith"),
+                ]).Result;
+                if (!result.Succeeded)
+                {
+                    throw new Exception(result.Errors.First().Description);
+                }
+                Log.Debug("alice created");
+            }
+            else
             {
-                UserName = "bob",
-                Email = "BobSmith@email.com",
-                EmailConfirmed = true
-            };
-            IdentityResult result = userMgr.CreateAsync(bob, "Pass123$").Result;
-            if (!result.Succeeded)
-                throw new Exception(result.Errors.First().Description);
+                Log.Debug("alice already exists");
+            }
 
-            result = userMgr.AddClaimsAsync(bob, [
-                new(JwtClaimTypes.Name, "Bob Smith")
-            ]).Result;
-            if (!result.Succeeded)
-                throw new Exception(result.Errors.First().Description);
-            Log.Debug("bob created");
+            ApplicationUser bob = userMgr.FindByNameAsync("bob").Result;
+            if (bob is null)
+            {
+                bob = new ApplicationUser
+                {
+                    UserName = "bob",
+                    Email = "BobSmith@email.com",
+                    EmailConfirmed = true
+                };
+                IdentityResult result = userMgr.CreateAsync(bob, "Pass123$").Result;
+                if (!result.Succeeded)
+                {
+                    throw new Exception(result.Errors.First().Description);
+                }
+
+                result = userMgr.AddClaimsAsync(bob, [
+                    new(JwtClaimTypes.Name, "Bob Smith")
+                ]).Result;
+                if (!result.Succeeded)
+                {
+                    throw new Exception(result.Errors.First().Description);
+                }
+                Log.Debug("bob created");
+            }
+            else
+            {
+                Log.Debug("bob already exists");
+            }
         }
-        else
-            Log.Debug("bob already exists");
     }
 }
