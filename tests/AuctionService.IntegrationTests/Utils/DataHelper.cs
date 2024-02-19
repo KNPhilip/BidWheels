@@ -1,5 +1,3 @@
-using AuctionService.Entities;
-
 namespace AuctionService.IntegrationTests.Utils
 {
     public static class DataHelper
