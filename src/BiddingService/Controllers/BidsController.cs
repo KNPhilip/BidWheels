@@ -12,7 +12,7 @@ namespace BiddingService.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class BidsController(IMapper mapper, IPublishEndpoint publishEndpoint, 
+    public sealed class BidsController(IMapper mapper, IPublishEndpoint publishEndpoint, 
         GrpcAuctionClient grpcClient) : ControllerBase
     {
         [HttpPost, Authorize] 

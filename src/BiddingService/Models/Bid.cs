@@ -2,7 +2,7 @@ using MongoDB.Entities;
 
 namespace BiddingService.Models
 {
-    public class Bid : Entity
+    public sealed class Bid : Entity
     {
         public string? AuctionId { get; set; }
         public string? Bidder { get; set; }

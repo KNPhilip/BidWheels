@@ -1,6 +1,6 @@
 namespace BiddingService.Contracts
 {
-    public class AuctionCreated
+    public sealed class AuctionCreated
     {
         public Guid Id { get; set; }
         public int ReservePrice { get; set; }
