@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AuctionService.Repositories
 {
-    public class AuctionRepository(AuctionContext context, IMapper mapper) : IAuctionRepository
+    public sealed class AuctionRepository(AuctionContext context, IMapper mapper) : IAuctionRepository
     {
         public void AddAuction(Auction request) =>
             context.Auctions.Add(request);

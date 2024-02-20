@@ -3,9 +3,9 @@ using Grpc.Core;
 
 namespace AuctionService.Services
 {
-    public class GrpcAuctionService(AuctionContext dbContext) : GrpcAuction.GrpcAuctionBase
+    public sealed class GrpcAuctionService(AuctionContext dbContext) : GrpcAuction.GrpcAuctionBase
     {
-        public override async Task<GrpcAuctionResponse> GetAuction(GetAuctionRequest request, ServerCallContext context)
+        public sealed override async Task<GrpcAuctionResponse> GetAuction(GetAuctionRequest request, ServerCallContext context)
         {
             Console.WriteLine("==> Recieved gRPC request for auction");
 

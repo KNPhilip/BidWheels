@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AuctionService.Data
 {
-    public class AuctionContext(DbContextOptions options) : DbContext(options)
+    public sealed class AuctionContext(DbContextOptions options) : DbContext(options)
     {
         public DbSet<Auction> Auctions { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected sealed override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 

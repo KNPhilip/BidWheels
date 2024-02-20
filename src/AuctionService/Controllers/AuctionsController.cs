@@ -11,7 +11,7 @@ namespace AuctionService.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AuctionsController(IMapper mapper, IPublishEndpoint publishEndpoint, 
+    public sealed class AuctionsController(IMapper mapper, IPublishEndpoint publishEndpoint, 
         IAuctionRepository auctionRepository) : ControllerBase
     {
         [HttpGet]
