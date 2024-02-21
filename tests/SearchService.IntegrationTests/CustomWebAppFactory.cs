@@ -1,6 +1,6 @@
 namespace SearchService.IntegrationTests
 {
-    public class CustomWebAppFactory : WebApplicationFactory<Program>
+    public sealed class CustomWebAppFactory : WebApplicationFactory<Program>
     {
         private readonly MongoDbRunner _runner;
 
@@ -16,7 +16,7 @@ namespace SearchService.IntegrationTests
                 .CreateAsync();
         }
 
-        protected override void ConfigureWebHost(IWebHostBuilder builder)
+        protected sealed override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.UseEnvironment("Testing");
             builder.ConfigureTestServices(services => 
@@ -25,7 +25,7 @@ namespace SearchService.IntegrationTests
             });
         }
 
-        protected override void Dispose(bool disposing)
+        protected sealed override void Dispose(bool disposing)
         {
             _runner.Dispose();
         }

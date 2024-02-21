@@ -1,7 +1,7 @@
 namespace AuctionService.IntegrationTests
 {
     [Collection("SharedFixture")]
-    public class AuctionControllerTests : IAsyncLifetime
+    public sealed class AuctionControllerTests : IAsyncLifetime
     {
         private readonly CustomWebAppFactory _factory;
         private readonly HttpClient _httpClient;

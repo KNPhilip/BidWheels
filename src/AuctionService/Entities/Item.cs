@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace AuctionService.Entities
 {
     [Table("Items")]
-    public class Item
+    public sealed class Item
     {
         public Guid Id { get; set; }
         public string Make { get; set; } = string.Empty;

@@ -5,9 +5,10 @@ using MongoDB.Entities;
 
 namespace BiddingService.Services
 {
-    public class CheckAuctionFinished(ILogger<CheckAuctionFinished> logger, IServiceProvider services) : BackgroundService
+    public sealed class CheckAuctionFinished(ILogger<CheckAuctionFinished> logger, 
+        IServiceProvider services) : BackgroundService
     {
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        protected sealed override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             logger.LogInformation("Starting check for finished auctions");
 

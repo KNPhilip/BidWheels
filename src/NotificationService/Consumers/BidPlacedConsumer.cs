@@ -1,6 +1,6 @@
 namespace NotificationService.Consumers
 {
-    public class BidPlacedConsumer(IHubContext<NotificationHub> hubContext) : IConsumer<BidPlaced>
+    public sealed class BidPlacedConsumer(IHubContext<NotificationHub> hubContext) : IConsumer<BidPlaced>
     {
         public async Task Consume(ConsumeContext<BidPlaced> context)
         {

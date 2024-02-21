@@ -1,6 +1,6 @@
 namespace AuctionService.UnitTests;
 
-public class AuctionEntityTests
+public sealed class AuctionEntityTests
 {
     [Fact]
     public void HasReservePrice_ReservePriceGtZero_True()

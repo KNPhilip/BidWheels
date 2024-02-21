@@ -1,6 +1,6 @@
 namespace AuctionService.UnitTests
 {
-    public class AuctionControllerTests
+    public sealed class AuctionControllerTests
     {
         private readonly Mock<IAuctionRepository> _auctionRepository;
         private readonly Mock<IPublishEndpoint> _publishEndpoint;

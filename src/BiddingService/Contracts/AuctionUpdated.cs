@@ -1,6 +1,6 @@
 namespace BiddingService.Contracts
 {
-    public class AuctionUpdated
+    public sealed class AuctionUpdated
     {
         public string? Id { get; set; }
         public string? Make { get; set; }

@@ -5,7 +5,7 @@ using BiddingService.Models;
 
 namespace BiddingService.RequestHelpers
 {
-    public class MappingProfiles : Profile
+    public sealed class MappingProfiles : Profile
     {
         public MappingProfiles()
         {

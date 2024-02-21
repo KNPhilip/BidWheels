@@ -5,7 +5,7 @@ using SearchService.Models;
 
 namespace SearchService.Consumers
 {
-    public class AuctionFinishedConsumer : IConsumer<AuctionFinished>
+    public sealed class AuctionFinishedConsumer : IConsumer<AuctionFinished>
     {
         public async Task Consume(ConsumeContext<AuctionFinished> context)
         {

@@ -3,7 +3,7 @@ namespace AuctionService.IntegrationTests.Fixtures
     /// <summary>
     /// Represents a custom web application factory used for integration testing.
     /// </summary>
-    public class CustomWebAppFactory : WebApplicationFactory<Program>, IAsyncLifetime
+    public sealed class CustomWebAppFactory : WebApplicationFactory<Program>, IAsyncLifetime
     {
         /// <summary>
         /// Represents a PostgreSqlContainer used for integration testing.
@@ -16,7 +16,7 @@ namespace AuctionService.IntegrationTests.Fixtures
         async Task IAsyncLifetime.DisposeAsync() =>
             await _postgresSqlContainer.DisposeAsync().AsTask();
 
-        protected override void ConfigureWebHost(IWebHostBuilder builder)
+        protected sealed override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.ConfigureTestServices(services =>
             {

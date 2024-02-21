@@ -7,7 +7,7 @@ namespace SearchService.Controllers
 {
     [ApiController]
     [Route("api/search")]
-    public class SearchController : ControllerBase
+    public sealed class SearchController : ControllerBase
     {
         [HttpGet]
         public async Task<ActionResult<List<Item>>> SearchItems([FromQuery] SearchParams searchParams)

@@ -3,7 +3,7 @@ using SearchService.Models;
 
 namespace SearchService.Services
 {
-    public class AuctionServiceHttpClient(HttpClient httpClient, IConfiguration config)
+    public sealed class AuctionServiceHttpClient(HttpClient httpClient, IConfiguration config)
     {
         public async Task<List<Item>> GetItemsForSearchDb()
         {

@@ -1,6 +1,6 @@
 namespace SearchService.Contracts
 {
-    public class AuctionFinished
+    public sealed class AuctionFinished
     {
         public bool ItemSold { get; set; }
         public string? AuctionId { get; set; }

@@ -4,7 +4,7 @@ using Grpc.Net.Client;
 
 namespace BiddingService.Services
 {
-    public class GrpcAuctionClient(ILogger<GrpcAuctionClient> logger, IConfiguration config)
+    public sealed class GrpcAuctionClient(ILogger<GrpcAuctionClient> logger, IConfiguration config)
     {
         public Auction GetAuction(string id)
         {

@@ -2,7 +2,7 @@ using System.Security.Claims;
 
 namespace AuctionService.UnitTests.Utils
 {
-    public class AuthHelper
+    public sealed class AuthHelper
     {
         public static ClaimsPrincipal GetClaimsPrincipal()
         {

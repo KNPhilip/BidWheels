@@ -5,7 +5,7 @@ using MassTransit;
 
 namespace AuctionService.Consumers
 {
-    public class AuctionFinishedConsumer(AuctionContext dbContext) : IConsumer<AuctionFinished>
+    public sealed class AuctionFinishedConsumer(AuctionContext dbContext) : IConsumer<AuctionFinished>
     {
         public async Task Consume(ConsumeContext<AuctionFinished> context)
         {

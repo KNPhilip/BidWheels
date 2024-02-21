@@ -1,6 +1,6 @@
 namespace AuctionService.Entities
 {
-    public class Auction
+    public sealed class Auction
     {
         public Guid Id { get; set; }
         public int ReservePrice { get; set; }

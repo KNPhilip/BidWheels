@@ -2,7 +2,7 @@
 
 namespace SearchService.IntegrationTests
 {
-    public class ConsumerTests(CustomWebAppFactory factory) : IClassFixture<CustomWebAppFactory>
+    public sealed class ConsumerTests(CustomWebAppFactory factory) : IClassFixture<CustomWebAppFactory>
     {
         private readonly ITestHarness _testHarness = factory.Services.GetTestHarness();
         private readonly Fixture _fixture = new();
