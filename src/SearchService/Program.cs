@@ -22,6 +22,11 @@ builder.Services.AddMassTransit(config =>
 
     config.UsingRabbitMq((context, cfg) => 
     {
+        cfg.UseMessageRetry(r => {
+            r.Handle<RabbitMqConnectionException>();
+            r.Interval(5, TimeSpan.FromSeconds(10));
+        });
+
         cfg.Host(builder.Configuration["RabbitMQ:Host"], "/", host => 
         {
             host.Username(builder.Configuration.GetValue("RabbitMQ:Username", "guest"));
@@ -44,15 +49,11 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Lifetime.ApplicationStarted.Register(async () => {
-    try
-    {
-        await DbInitializer.InitDb(app);
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"--> Something went wrong: {ex}");
-    }
+app.Lifetime.ApplicationStarted.Register(async () =>
+{
+    await Policy.Handle<TimeoutException>()
+        .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(5))
+        .ExecuteAndCaptureAsync(async () => await DbInitializer.InitDb(app));
 });
 
 app.Run();
