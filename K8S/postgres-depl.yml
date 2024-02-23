@@ -19,3 +19,10 @@ spec:
             value: postgrespw
         ports:
         - containerPort: 5432
+        volumeMounts:
+        - mountPath: /var/data/postgresql
+          name: postgresdata
+      volumes:
+        - name: postgresdata
+          persistentVolumeClaim:
+            claimName: postgres-claim
