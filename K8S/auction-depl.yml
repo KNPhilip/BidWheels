@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auction-svc
+spec:
+  selector:
+    matchLabels:
+      app: auction-svc
+  template:
+    metadata:
+      labels:
+        app: auction-svc
+    spec:
+      containers:
+      - name: auction-svc
+        image: knphilip/bidwheels-auction-svc
+        imagePullPolicy: Never
+        env:
+          - name: RabbitMQ__Host
+            value: rabbitmq-clusterip
+          - name: RabbitMQ__Username
+            value: rabbit
+          - name: RabbitMQ__Password
+            value: rabbit
+          - name: ConntectionStrings__Default
+            value: Server=postgres-clusterip:5432;User Id=postgres;Password=postgrespw;Database=auctions
+          - name: IdentityServiceUrl
+            value: https://id.sample-website.com
+          - name: Kestrel__Endpoints__Grpc__Protocols
+            value: Http2
+          - name: Kestrel__Endpoints__Grpc__Url
+            value: http://+:7777
+          - name: Kestrel__Endpoints__WebApi__Protocols
+            value: Http1
+          - name: Kestrel__Endpoints__WebApi__Protocols
+            value: http://+:80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auction-clusterip
+spec:
+  type: ClusterIP
+  selector:
+    app: auction-svc
+  ports:
+  - port: 80
+    targetPort: 80
+    name: web
+  - port: 7777
+    targetPort: 7777
+    name: grpc
+
+
