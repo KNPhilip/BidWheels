@@ -50,4 +50,3 @@ spec:
   ports:
   - port: 5432
     targetPort: 5432
-

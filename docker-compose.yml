@@ -34,7 +34,7 @@ services:
     networks:
       custom:
   auction-svc:
-    image: knphilip/auction-svc:latest
+    image: knphilip/bidwheels-auction-svc:latest
     build:
       context: .
       dockerfile: src/AuctionService/Dockerfile
@@ -58,7 +58,7 @@ services:
       - rabbitmq
       - postgres
   search-svc:
-    image: knphilip/search-svc:latest
+    image: knphilip/bidwheels-search-svc:latest
     build:
       context: .
       dockerfile: src/SearchService/Dockerfile
@@ -76,7 +76,7 @@ services:
       - rabbitmq
       - mongodb
   identity-svc:
-    image: knphilip/identity-svc:latest
+    image: knphilip/bidwheels-identity-svc:latest
     build:
       context: .
       dockerfile: src/IdentityService/Dockerfile
@@ -92,7 +92,7 @@ services:
     depends_on:
       - postgres
   gateway-svc:
-    image: knphilip/gateway-svc:latest
+    image: knphilip/bidwheels-gateway-svc:latest
     build:
       context: .
       dockerfile: src/GatewayService/Dockerfile
@@ -106,7 +106,7 @@ services:
     networks:
       custom:
   bid-svc:
-    image: knphilip/bid-svc:latest
+    image: knphilip/bidwheels-bid-svc:latest
     build:
       context: .
       dockerfile: src/BiddingService/Dockerfile
@@ -125,7 +125,7 @@ services:
       - mongodb
       - rabbitmq
   notify-svc:
-    image: knphilip/notify-svc:latest
+    image: knphilip/bidwheels-notify-svc:latest
     build:
       context: .
       dockerfile: src/NotificationService/Dockerfile
@@ -140,7 +140,7 @@ services:
     depends_on:
       - rabbitmq
   web-app:
-    image: knphilip/web-app:latest
+    image: knphilip/bidwheels-web-app:latest
     build:
       context: .
       dockerfile: frontend/web-app/Dockerfile
