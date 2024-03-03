@@ -22,7 +22,7 @@ spec:
             value: rabbit
           - name: RabbitMQ__Password
             value: rabbit
-          - name: ConntectionStrings__MongoDb
+          - name: ConnectionStrings__MongoDb
             value: mongodb://root:mongopw@mongo-clusterip
           - name: AuctionServiceUrl
             value: http://auction-clusterip
