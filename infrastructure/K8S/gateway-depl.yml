@@ -18,8 +18,8 @@ spec:
         env:
           - name: ClientApp
             value: https://app.bidwheels.com
-          - name: VIRTUAL_HOST
-            value: api.bidwheels.com
+          - name: IdentityServiceUrl
+            value: https://id.sample-website.com
 ---
 apiVersion: v1
 kind: Service
