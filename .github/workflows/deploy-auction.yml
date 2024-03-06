@@ -1,4 +1,4 @@
-name: Deploy Identity Service
+name: Deploy Auction Service
 
 on:
   workflow_dispatch:
@@ -6,7 +6,11 @@ on:
     branches:
       - main
     paths:
-      - 'src/IdentityService/**'
+      - 'src/AuctionService/**'
+
+env:
+  REGISTRY_IMAGE: knphilip/bidwheels-auction-svc
+  DOCKERFILE: src/AuctionService/Dockerfile
 
 jobs:
   build:
@@ -15,7 +19,8 @@ jobs:
     - name: Build and push the Docker image
       uses: knphilip/actions/dockerfile-push@main
       with:
-        tags: knphilip/bidwheels-identity-svc:latest
-        file: src/IdentityService/Dockerfile
+        context: "{{defaultContext}}"
+        tags: ${{ env.REGISTRY_IMAGE }}:latest
+        file: ${{ env.DOCKERFILE }}
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
