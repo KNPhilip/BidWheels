@@ -151,7 +151,7 @@ services:
     extra_hosts:
       - id.sample-website.com.com:10.5.0.200
     environment:
-      - NEXTAUTH_SECRET=somethingreallyreallysecret
+      - NEXTAUTH_SECRET=thisisevenmoresecretthanprevioussecrets
       - NEXTAUTH_URL=http://app.bidwheels.com
       - NAXTAUTH_URL_INTERNAL=http://web-app:3000
       - API_URL=http://gateway-svc/
