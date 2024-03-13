@@ -21,4 +21,4 @@ jobs:
     - name: Save DigitalOcean kubeconfig
       run: doctl kubernetes cluster kubeconfig save bidwheels
     - name: Apply Kubernetes manifests
-      run: kubectl apply -f infrastructure/k8s
+      run: kubectl apply -f infrastructure/K8S && kubectl apply -f infrastructure/prod-k8s
