@@ -1,0 +1,35 @@
+name: Deploy Notification Service
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/NotificationService/**'
+
+env:
+  REGISTRY_IMAGE: knphilip/bidwheels-notify-svc
+  DOCKERFILE: src/NotificationService/Dockerfile
+  DEPLOYMENT_NAME: notify-svc
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Build and push the Docker image
+      uses: knphilip/actions/dockerfile-push@main
+      with:
+        context: "{{defaultContext}}"
+        tags: ${{ env.REGISTRY_IMAGE }}:latest
+        file: ${{ env.DOCKERFILE }}
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Install doctl
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+    - name: Save DigitalOcean kubeconfig
+      run: doctl kubernetes cluster kubeconfig save bidwheels
+    - name: Restart Kubernetes deployment
+      run: kubectl rollout restart deployment ${{ secrets.DEPLOYMENT_NAME }}
