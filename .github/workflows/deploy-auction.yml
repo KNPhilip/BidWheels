@@ -11,6 +11,7 @@ on:
 env:
   REGISTRY_IMAGE: knphilip/bidwheels-auction-svc
   DOCKERFILE: src/AuctionService/Dockerfile
+  DEPLOYMENT_NAME: auction-svc
 
 jobs:
   build:
@@ -24,3 +25,11 @@ jobs:
         file: ${{ env.DOCKERFILE }}
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Install doctl
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+    - name: Save DigitalOcean kubeconfig
+      run: doctl kubernetes cluster kubeconfig save bidwheels
+    - name: Restart Kubernetes deployment
+      run: kubectl rollout restart deployment ${{ secrets.DEPLOYMENT_NAME }}
