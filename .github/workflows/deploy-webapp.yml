@@ -1,0 +1,35 @@
+name: Deploy Web Application
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'frontend/web-app/**'
+
+env:
+  REGISTRY_IMAGE: knphilip/bidwheels-web-app
+  DOCKERFILE: frontend/web-app/Dockerfile
+  DEPLOYMENT_NAME: webapp
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Build and push the Docker image
+      uses: knphilip/actions/dockerfile-push@main
+      with:
+        context: "{{defaultContext}}"
+        tags: ${{ env.REGISTRY_IMAGE }}:latest
+        file: ${{ env.DOCKERFILE }}
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Install doctl
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+    - name: Save DigitalOcean kubeconfig
+      run: doctl kubernetes cluster kubeconfig save bidwheels
+    - name: Restart Kubernetes deployment
+      run: kubectl rollout restart deployment ${{ secrets.DEPLOYMENT_NAME }}
