@@ -1,4 +1,4 @@
-name: Deploy Auction Service
+name: Deploy Notification Service
 
 on:
   workflow_dispatch:
@@ -6,12 +6,12 @@ on:
     branches:
       - main
     paths:
-      - 'src/AuctionService/**'
+      - 'src/NotificationService/**'
 
 env:
-  REGISTRY_IMAGE: knphilip/bidwheels-auction-svc
-  DOCKERFILE: src/AuctionService/Dockerfile
-  DEPLOYMENT_NAME: auction-svc
+  REGISTRY_IMAGE: knphilip/bidwheels-notify-svc
+  DOCKERFILE: src/NotificationService/Dockerfile
+  DEPLOYMENT_NAME: notify-svc
 
 jobs:
   build:

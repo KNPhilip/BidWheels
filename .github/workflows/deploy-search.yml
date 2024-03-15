@@ -1,4 +1,4 @@
-name: Deploy Auction Service
+name: Deploy Search Service
 
 on:
   workflow_dispatch:
@@ -6,12 +6,12 @@ on:
     branches:
       - main
     paths:
-      - 'src/AuctionService/**'
+      - 'src/SearchService/**'
 
 env:
-  REGISTRY_IMAGE: knphilip/bidwheels-auction-svc
-  DOCKERFILE: src/AuctionService/Dockerfile
-  DEPLOYMENT_NAME: auction-svc
+  REGISTRY_IMAGE: knphilip/bidwheels-search-svc
+  DOCKERFILE: src/SearchService/Dockerfile
+  DEPLOYMENT_NAME: search-svc
 
 jobs:
   build:
