@@ -14,7 +14,7 @@ spec:
       containers:
       - name: web-app
         image: knphilip/bidwheels-webapp
-        imagePullPolicy: Never
+        imagePullPolicy: Always
         env:
           - name: NEXTAUTH_SECRET
             valueFrom:
