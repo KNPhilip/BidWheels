@@ -1,9 +1,9 @@
-import { useParamStore } from '@/hooks/useParamsStore';
+import { useParamsStore } from '@/hooks/useParamsStore';
 import { Button } from 'flowbite-react';
 import React from 'react';
 import { AiOutlineClockCircle, AiOutlineSortAscending } from 'react-icons/ai';
-import { BsFillStopCircleFill, BsStopwatchFill } from 'react-icons/bs'
-import { GiFinishLine, GiFlame } from 'react-icons/gi'
+import { BsFillStopCircleFill, BsStopwatchFill } from 'react-icons/bs';
+import { GiFinishLine, GiFlame } from 'react-icons/gi';
 
 const pageSizeButtons = [4, 8, 12];
 
@@ -23,7 +23,7 @@ const orderButtons = [
     icon: BsFillStopCircleFill,
     value: 'new'
   },
-]
+];
 
 const filterButtons = [
   {
@@ -41,13 +41,13 @@ const filterButtons = [
     icon: BsStopwatchFill,
     value: 'finished'
   },
-]
+];
 
 const Filters = () =>  {
-  const pageSize = useParamStore(state => state.pageSize);
-  const setParams = useParamStore(state => state.setParams);
-  const orderBy = useParamStore(state => state.orderBy);
-  const filterBy = useParamStore(state => state.filterBy);
+  const pageSize = useParamsStore(state => state.pageSize);
+  const setParams = useParamsStore(state => state.setParams);
+  const orderBy = useParamsStore(state => state.orderBy);
+  const filterBy = useParamsStore(state => state.filterBy);
 
   return (
     <div className="flex justify-between items-center mb-4">

@@ -1,6 +1,6 @@
 'use client'
 
-import { useParamStore } from '@/hooks/useParamsStore'
+import { useParamsStore } from '@/hooks/useParamsStore'
 import { usePathname, useRouter } from 'next/navigation'
 import React from 'react'
 import { FaSearch } from 'react-icons/fa'
@@ -8,9 +8,9 @@ import { FaSearch } from 'react-icons/fa'
 const Search = () => {
     const router = useRouter();
     const pathName = usePathname();
-    const setParams = useParamStore(state => state.setParams);
-    const setSearchValue = useParamStore(state => state.setSearchValue);
-    const searchValue = useParamStore(state => state.searchValue);
+    const setParams = useParamsStore(state => state.setParams);
+    const setSearchValue = useParamsStore(state => state.setSearchValue);
+    const searchValue = useParamsStore(state => state.searchValue);
 
     function onChange(event: any) {
         setSearchValue(event.target.value);
