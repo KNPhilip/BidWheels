@@ -2,10 +2,17 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-svc
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
   labels:
     name: ingress-svc
 spec:
   ingressClassName: nginx
+  tls:
+  - hosts:
+    - app.bidwheels.com
+    - api.bidwheels.com
+    secretName: bidwheels-tls
   rules:
   - host: app.bidwheels.com
     http:
