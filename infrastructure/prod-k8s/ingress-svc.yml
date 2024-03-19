@@ -6,11 +6,6 @@ metadata:
     name: ingress-svc
 spec:
   ingressClassName: nginx
-  tls:
-    - hosts:
-      - app.bidwheels.com
-      - api.bidwheels.com
-      secretName: bidwheels-app-tls
   rules:
   - host: app.bidwheels.com
     http:
