@@ -5,7 +5,7 @@ import AuctionCard from './AuctionCard';
 import AppPagination from '../components/AppPagination';
 import { getData } from '../actions/auctionActions';
 import Filters from './Filters';
-import { useParamStore } from '@/hooks/useParamsStore';
+import { useParamsStore } from '@/hooks/useParamsStore';
 import { shallow } from 'zustand/shallow';
 import qs from 'query-string';
 import EmptyFilter from '../components/EmptyFilter';
@@ -13,7 +13,7 @@ import { useAuctionStore } from '@/hooks/useAuctionStore';
 
 const Listings = () => {
     const [loading, setLoading] = useState(true);
-    const params = useParamStore(state => ({
+    const params = useParamsStore(state => ({
         pageNumber: state.pageNumber,
         pageSize: state.pageSize,
         searchTerm: state.searchTerm,
@@ -29,7 +29,7 @@ const Listings = () => {
     }), shallow);
     const setData = useAuctionStore(state => state.setData);
 
-    const setParams = useParamStore(state => state.setParams);
+    const setParams = useParamsStore(state => state.setParams);
     const url = qs.stringifyUrl({url: '', query: params})
 
     function setPageNumber(pageNumber: number) {
@@ -43,7 +43,7 @@ const Listings = () => {
         })
     }, [url, setData])
 
-    if (!loading) return <h3>Loading...</h3>
+    if (loading) return <h3>Loading...</h3>
 
     return (
         <>

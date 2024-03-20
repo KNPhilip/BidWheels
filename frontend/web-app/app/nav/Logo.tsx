@@ -1,6 +1,6 @@
 'use client'
 
-import { useParamStore } from '@/hooks/useParamsStore'
+import { useParamsStore } from '@/hooks/useParamsStore'
 import { usePathname, useRouter } from 'next/navigation'
 import React from 'react'
 import { AiOutlineCar } from 'react-icons/ai'
@@ -8,7 +8,7 @@ import { AiOutlineCar } from 'react-icons/ai'
 const Logo = () => {
     const router = useRouter();
     const pathName = usePathname();
-    const reset = useParamStore(state => state.reset);
+    const reset = useParamsStore(state => state.reset);
 
     function doReset() {
         if (pathName !== '/')

@@ -14,13 +14,18 @@ spec:
       containers:
       - name: web-app
         image: knphilip/bidwheels-webapp
-        imagePullPolicy: Never
+        imagePullPolicy: Always
         env:
           - name: NEXTAUTH_SECRET
             valueFrom:
               secretKeyRef:
                 name: webapp-secret
                 key: authSecret
+          - name: CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: webapp-secret
+                key: clientSecret
           - name: NEXTAUTH_URL
             value: https://app.bidwheels.com
           - name: API_URL

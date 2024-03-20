@@ -14,7 +14,7 @@ spec:
       containers:
       - name: auction-svc
         image: knphilip/bidwheels-auction-svc
-        imagePullPolicy: Never
+        imagePullPolicy: Always
         env:
           - name: RabbitMQ__Host
             value: rabbitmq-clusterip

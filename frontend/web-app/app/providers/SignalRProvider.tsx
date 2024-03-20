@@ -5,8 +5,8 @@ import { useBidStore } from '@/hooks/useBidStore';
 import { Auction, AuctionFinished, Bid } from '@/types';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { User } from 'next-auth';
-import { ReactNode, useEffect, useState } from 'react'
-import toast from 'react-hot-toast';
+import { ReactNode, useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
 import AuctionCreatedToast from '../components/AuctionCreatedToast';
 import { getDetailedViewData } from '../actions/auctionActions';
 import AuctionFinishedToast from '../components/AuctionFinishedToast';
@@ -22,7 +22,8 @@ const SignalRProvider = ({children, user}: Props) => {
     const addBid = useBidStore(state => state.addBid);
     const apiUrl = process.env.NODE_ENV === 'production' 
         ? 'https://api.bidwheels.com/notifications'
-        : process.env.NEXT_PUBLIC_NOTIFY_URL;
+        : 'http://localhost:6001/notifications';
+        // : process.env.NEXT_PUBLIC_NOTIFY_URL;
 
     useEffect(() => {
         const newConnection = new HubConnectionBuilder()
@@ -61,7 +62,7 @@ const SignalRProvider = ({children, user}: Props) => {
                                     finishedAuction={finishedAuction} 
                                     auction={auction} 
                                 />,
-                            error: (err) => `Auction finished!`
+                            error: (err) => 'Auction finished!'
                         }, {success: {duration: 5000, icon: null}})
                     });
                 }).catch(err => console.error('SignalR connection failed', err));

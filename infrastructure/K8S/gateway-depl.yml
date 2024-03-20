@@ -14,7 +14,7 @@ spec:
       containers:
       - name: gateway-svc
         image: knphilip/bidwheels-gateway-svc
-        imagePullPolicy: Never
+        imagePullPolicy: Always
         env:
           - name: ClientApp
             value: https://app.bidwheels.com
